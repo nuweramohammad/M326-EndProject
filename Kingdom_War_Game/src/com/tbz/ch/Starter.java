@@ -5,5 +5,6 @@ public class Starter {
         //TODO: write code
         Organizer organizer = new Organizer();
         organizer.run();
+
     }
 }
