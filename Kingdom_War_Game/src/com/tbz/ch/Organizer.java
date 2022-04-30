@@ -1,9 +1,9 @@
 package com.tbz.ch;
-
 public class Organizer {
-    IOHandler ioHandler = new IOHandler();
-
+    private IOHandler ioHandler = new IOHandler();
     public void run(){
-        ioHandler.printMainMenu();
+        ioHandler.printInstigation();
+        ioHandler.printRoleMenu();
+        ioHandler.chooseRole();
     };
 }
