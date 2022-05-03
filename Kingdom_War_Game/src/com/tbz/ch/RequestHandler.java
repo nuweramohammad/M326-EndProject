@@ -4,7 +4,15 @@ public abstract class RequestHandler {
     private RequestHandler nextRequest;
     private int count;
 
-    public void handleRequest(){};
+    public RequestHandler(RequestHandler nextRequest) {
+        this.nextRequest = nextRequest;
+    }
+
+    public void handleRequest(Instruction request){
+        if (nextRequest != null){
+            nextRequest.handleRequest(request);
+        }
+    }
     public int handleWin(){
         return count;
     }

@@ -1,20 +1,33 @@
 package com.tbz.ch;
 
 public class King {
-    private String name;
     private double bankBalance;
-    Instruction instruction = new Instruction();
-    private RequestHandler requestHandler;
+    private RequestHandler militaryChain;
+    private RequestHandler populationChain;
 
-    public Instruction giveHighestCommand(){
-        return instruction;
+    public King() {
+        buildChain();
     }
 
-    public Double checkBankBalance(){
+    private void buildChain() {
+        militaryChain = new Commander(new Soldier(null));
+        populationChain = new Minister(new Citizen(null));
+    }
+
+    public void makeRequest(Instruction instruction) {
+        if (Command.COLLECT_TAX == instruction.getCommand() || Command.PROTEST == instruction.getCommand()
+                || Command.START_SAVING == instruction.getCommand() || Command.START_SPENDING == instruction.getCommand()) {
+            populationChain.handleRequest(instruction);
+        }else if(Command.SHOOTING_PRACTICE == instruction.getCommand()|| Command.STAMINA_EXERCISES == instruction.getCommand()){
+            militaryChain.handleRequest(instruction);
+        }
+    }
+
+    public Double checkBankBalance() {
         return bankBalance;
     }
 
-    public Instruction takeAdvice(){
-        return instruction;
+    public double getBankBalance() {
+        return bankBalance;
     }
 }

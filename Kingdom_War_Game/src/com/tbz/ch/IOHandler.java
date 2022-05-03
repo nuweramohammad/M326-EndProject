@@ -32,7 +32,7 @@ public class IOHandler {
                     printCitizensMenu();
                     break;
                 default:
-                    System.out.println("Number has to be between 1 and 5 \n > ");
+                    System.out.println("Invalid answer, Number has to be between 1 and 5 \n > ");
                     break;
             }
         } while (answer > 5 || answer < 1);
@@ -46,18 +46,22 @@ public class IOHandler {
         System.out.println("│4. Commander            │     │5. Citizen              │");
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯" + RESET);
         System.out.println("Choose your role:");
-        System.out.print(">");
+        System.out.print("> ");
     }
 
     public void printInstigation() {
+        int answer = 0;
         System.out.println(GREEN + "Hello to the sad dual of the AK Kingdom and the NM Kingdom. This war has been going on for decades. Now it is up to you to decide" +
-                "their faith..." + RED + "\nLET THE GAME BEGIN.. WHO DO YOU WANT TO FIGHT FOR?!" + "\n I you want to exit the game you can press 0 at any time of the game");
-        System.out.println("╭────────────────────────╮     ╭────────────────────────╮");
+                "their faith..." + RED + "\nLET THE GAME BEGIN.. WHO DO YOU WANT TO FIGHT FOR?!" + GREEN + "\nIf you want to exit the game you can press 0 at any time of the game" + RESET);
+        System.out.println(RED + "╭────────────────────────╮     ╭────────────────────────╮");
         System.out.println("│1. AK KINGDOM           │     │2. NM KINGDOM           │");
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯" + RESET);
-        System.out.print("> ");
-        int answer = validate.validateIntInput();
+        do {
+            System.out.print("> ");
+            answer = validate.validateIntInput();
+        } while (answer < 1 || answer > 2);
     }
+
 
     public void printKingsMenu() {
         System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
@@ -69,9 +73,27 @@ public class IOHandler {
         System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮");
         System.out.println("│1.     Shoot            │     │2. Defend               │ ");
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯ " + RESET);
+        soldierRole();
     }
 
-    ;
+    public void soldierRole() {
+        int answer = 0;
+        do {
+            switch (answer) {
+                case 1:
+                    System.out.println("shoot");
+                    break;
+                case 2:
+                    System.out.println("defend");
+                    break;
+                default:
+                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    break;
+            }
+        } while (answer < 1 || answer > 2);
+    }
+
+
 
     public void printCitizensMenu() {
         System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
@@ -79,7 +101,6 @@ public class IOHandler {
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
     }
 
-    ;
 
     public void printCommandersMenu() {
         System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
@@ -87,7 +108,6 @@ public class IOHandler {
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
     }
 
-    ;
 
     /**
      * This method prints a nice output to
