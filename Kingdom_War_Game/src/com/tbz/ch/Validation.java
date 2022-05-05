@@ -2,14 +2,38 @@ package com.tbz.ch;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validation {
     Scanner scan = new Scanner(System.in);
 
+    /**
+     * this method checks if the input of the user has only
+     * letters, if not it will give an error to the user.
+     * This method asks him / her to try again, it will ask as
+     * long as the input isn't correct
+     *
+     * @return input
+     */
     public String validateStringInput() {
-        return "";
+        Scanner scan = new Scanner(System.in);
+        Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+
+        String input = scan.nextLine();
+        Matcher m = p.matcher(input);
+        boolean hasCharacter = m.find();
+
+        while (hasCharacter) {
+            System.out.println("\u001B[31mInvalid answer, your answer can only contain letters\n");
+            System.out.print("Try again: \u001B[0m");
+            input = scan.nextLine();
+            m = p.matcher(input);
+            hasCharacter = m.find();
+        }
+        return input;
     }
+
 
     /**
      * This method checks for an input
@@ -25,7 +49,7 @@ public class Validation {
         boolean match = Pattern.matches(intPattern, answer);
         while (!match) {
             if (!answer.matches(intPattern)) {
-                System.out.println(IOHandler.RED + "Not valid, try again: \n > " + IOHandler.RESET);
+                System.out.print(IOHandler.RED + "Not valid, try again: \n > " + IOHandler.RESET);
                 answer = scan.nextLine();
             } else {
                 match = true;

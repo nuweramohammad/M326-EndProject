@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Soldier extends RequestHandler {
     private String name = "Soldier";
-    Notification notification = new Notification();
+
 
     public Soldier(RequestHandler requestHandler) {
         super(requestHandler);
@@ -12,11 +12,11 @@ public class Soldier extends RequestHandler {
 
     @Override
     public void handleRequest(Instruction request) {
-       if (Command.SHOOTING_PRACTICE == request.getCommand()){
-           System.out.println(this.name + "Handle request: "+ request);
+       if (Command.SHOOTING_PRACTICE == request.getCommand() || Command.STAMINA_EXERCISES == request.getCommand()){
+           System.out.println(this.name + " Handle request: "+ request);
            request.markHandled();
        }else{
-           super.handleRequest(request);
+           System.out.println("Not a request for the Soldier");
        }
     }
 

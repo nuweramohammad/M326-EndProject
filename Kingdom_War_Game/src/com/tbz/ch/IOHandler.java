@@ -1,6 +1,10 @@
 package com.tbz.ch;
 
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class IOHandler {
     private Queue queue;
@@ -10,32 +14,32 @@ public class IOHandler {
     public static final String BLUE = "\u001B[34m";
     private final Scanner scan = new Scanner(System.in);
     private Validation validate = new Validation();
+    private King king = new King();
+
 
     public void chooseRole() {
         int answer = validate.validateIntInput();
-        do {
-            switch (answer) {
-                case 1:
-                    printKingsMenu();
-                    break;
-                case 2:
-                    printSoldiersMenu();
-                    break;
-                case 3:
-                    //todo minister menu
-                    System.out.println("Minister Menu...");
-                    break;
-                case 4:
-                    printCommandersMenu();
-                    break;
-                case 5:
-                    printCitizensMenu();
-                    break;
-                default:
-                    System.out.println("Invalid answer, Number has to be between 1 and 5 \n > ");
-                    break;
-            }
-        } while (answer > 5 || answer < 1);
+        switch (answer) {
+            case 1:
+                printKingsMenu();
+                break;
+            case 2:
+                printSoldiersMenu();
+                break;
+            case 3:
+                //todo minister menu
+                System.out.println("Minister Menu...");
+                break;
+            case 4:
+                printCommandersMenu();
+                break;
+            case 5:
+                printCitizensMenu();
+                break;
+            default:
+                System.out.println("Invalid answer, Number has to be between 1 and 5 \n > ");
+                break;
+        }
     }
 
     public void printRoleMenu() {
@@ -65,19 +69,53 @@ public class IOHandler {
 
     public void printKingsMenu() {
         System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│1.            #C1       │     │2. #C2                  │     │3. #     C3             │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        System.out.println("│1. Check Bank balance       │     │2. Check army           │     │3. Give instruction     │");
+        System.out.println("╰────────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        kingsRole(new Instruction(Command.COLLECT_TAX, "collect 5% of income as tax"));
+    }
+
+    public void kingsRole(Instruction instruction) {
+        int answer = 0;
+        answer = validate.validateIntInput();
+        switch (answer) {
+            case 1:
+                System.out.println("check balance");
+                break;
+            case 2:
+                System.out.println("check army");
+                break;
+            case 3:
+                List<String> commandList = EnumSet.allOf(Command.class).stream().map(Command::name).collect(Collectors.toList());
+                String commandAnswer = "";
+                while (!commandList.contains(commandAnswer)) {
+                    System.out.println(commandList);
+                    System.out.println("> ");
+                    commandAnswer = scan.nextLine();
+                    if (commandList.contains(commandAnswer)) {
+                        king.makeRequest(instruction);
+                    } else {
+                        System.out.print("No such command found \n Try again: \n > ");
+                        commandAnswer = scan.nextLine();
+                    }
+                }
+                break;
+            default:
+                System.out.println("Not valid \n Try again: \n > ");
+                break;
+        }
+
     }
 
     public void printSoldiersMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│1.     Shoot            │     │2. Defend               │ ");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯ " + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
+        System.out.println("│1. Shoot                │     │2. Defend               │     │3. Check Notification   │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
         soldierRole();
     }
 
     public void soldierRole() {
         int answer = 0;
+        answer = validate.validateIntInput();
         do {
             switch (answer) {
                 case 1:
@@ -92,7 +130,6 @@ public class IOHandler {
             }
         } while (answer < 1 || answer > 2);
     }
-
 
 
     public void printCitizensMenu() {

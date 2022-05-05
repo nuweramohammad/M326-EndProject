@@ -5,5 +5,7 @@ public class Organizer {
         ioHandler.printInstigation();
         ioHandler.printRoleMenu();
         ioHandler.chooseRole();
+
+        ioHandler.printGoodBye();
     };
 }

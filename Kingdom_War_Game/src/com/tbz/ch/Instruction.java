@@ -2,12 +2,12 @@ package com.tbz.ch;
 
 public class Instruction {
     private Command command;
-    private String commmandDescription;
+    private String commandDescription;
     private boolean isSent;
 
-    public Instruction(Command command, String commmandDescription) {
+    public Instruction(Command command, String commandDescription) {
         this.command = command;
-        this.commmandDescription = commmandDescription;
+        this.commandDescription = commandDescription;
     }
 
     public void markHandled(){
@@ -18,8 +18,8 @@ public class Instruction {
         return command;
     }
 
-    public String getCommmandDescription() {
-        return commmandDescription;
+    public String getCommandDescription() {
+        return commandDescription;
     }
 
     public boolean isSent() {
@@ -28,6 +28,6 @@ public class Instruction {
 
     @Override
     public String toString() {
-        return getCommmandDescription();
+        return getCommandDescription();
     }
 }
