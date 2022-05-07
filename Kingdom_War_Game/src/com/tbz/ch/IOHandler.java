@@ -1,23 +1,27 @@
 package com.tbz.ch;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 public class IOHandler {
-    private Queue queue;
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
     public static final String BLUE = "\u001B[34m";
     private final Scanner scan = new Scanner(System.in);
+    private Queue queue;
     private Validation validate = new Validation();
     private King king = new King();
 
-
     public void chooseRole() {
+        System.out.println("Choose your role:");
+        System.out.print("> ");
         int answer = validate.validateIntInput();
         switch (answer) {
             case 1:
@@ -49,8 +53,7 @@ public class IOHandler {
         System.out.println("╭────────────────────────╮     ╭────────────────────────╮");
         System.out.println("│4. Commander            │     │5. Citizen              │");
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯" + RESET);
-        System.out.println("Choose your role:");
-        System.out.print("> ");
+
     }
 
     public void printInstigation() {
@@ -69,12 +72,31 @@ public class IOHandler {
 
     public void printKingsMenu() {
         System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│1. Check Bank balance       │     │2. Check army           │     │3. Give instruction     │");
-        System.out.println("╰────────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
-        kingsRole(new Instruction(Command.COLLECT_TAX, "collect 5% of income as tax"));
+        System.out.println("│1. Check Bank balance   │     │2. Check army           │     │3. Give instruction     │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        kingsRole();
     }
 
-    public void kingsRole(Instruction instruction) {
+    public Instruction giveInstruction() {
+        Instruction instruction = new Instruction(Command.PROTEST, printInstructionDescription(wapisdehCommand()));
+        List<String> commandList = Stream.of(Command.values()).map(Enum::name).collect(Collectors.toList());
+        String commandAnswer = "";
+        while (!commandList.contains(commandAnswer)) {
+            System.out.println(commandList);
+            System.out.println("> ");
+            commandAnswer = scan.nextLine();
+            if (commandList.contains(commandAnswer)) {
+                king.makeRequest(instruction);
+            } else {
+                System.out.print("No such command found \n Try again: \n > ");
+                commandAnswer = scan.nextLine();
+            }
+        }
+        return instruction;
+    }
+
+    public void kingsRole() {
+        System.out.print("> ");
         int answer = 0;
         answer = validate.validateIntInput();
         switch (answer) {
@@ -85,19 +107,7 @@ public class IOHandler {
                 System.out.println("check army");
                 break;
             case 3:
-                List<String> commandList = EnumSet.allOf(Command.class).stream().map(Command::name).collect(Collectors.toList());
-                String commandAnswer = "";
-                while (!commandList.contains(commandAnswer)) {
-                    System.out.println(commandList);
-                    System.out.println("> ");
-                    commandAnswer = scan.nextLine();
-                    if (commandList.contains(commandAnswer)) {
-                        king.makeRequest(instruction);
-                    } else {
-                        System.out.print("No such command found \n Try again: \n > ");
-                        commandAnswer = scan.nextLine();
-                    }
-                }
+                giveInstruction();
                 break;
             default:
                 System.out.println("Not valid \n Try again: \n > ");
@@ -145,6 +155,23 @@ public class IOHandler {
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
     }
 
+    public String printInstructionDescription(Command command) {
+        String description = "";
+        switch (command) {
+            case COLLECT_TAX -> description = "Collect 5% of income as tax";
+            case PROTEST -> description = "Go Protest for your king";
+            case SHOOTING_PRACTICE -> description = "Get ready to start shooting";
+            case STAMINA_EXERCISES -> description = "Lets work on those abs";
+            case START_SAVING -> description = "Keep the money you earn for yourself";
+            case START_SPENDING -> description = "Help your state by spending your income!";
+        }
+        System.out.println(description);
+        return description;
+    }
+
+    public Command wapisdehCommand(){
+        return giveInstruction().getCommand();
+    }
 
     /**
      * This method prints a nice output to
