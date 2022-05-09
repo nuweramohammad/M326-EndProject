@@ -8,6 +8,10 @@ public abstract class RequestHandler {
         this.nextRequest = nextRequest;
     }
 
+    public RequestHandler() {
+
+    }
+
     public void handleRequest(Instruction request){
         if (nextRequest != null){
             nextRequest.handleRequest(request);

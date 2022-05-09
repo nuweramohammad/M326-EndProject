@@ -1,12 +1,6 @@
 package com.tbz.ch;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.List;
-
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class IOHandler {
@@ -18,31 +12,48 @@ public class IOHandler {
     private Queue queue;
     private Validation validate = new Validation();
     private King king = new King();
+    private Soldier soldier = new Soldier();
+
 
     public void chooseRole() {
-        System.out.println("Choose your role:");
-        System.out.print("> ");
-        int answer = validate.validateIntInput();
-        switch (answer) {
-            case 1:
-                printKingsMenu();
-                break;
-            case 2:
-                printSoldiersMenu();
-                break;
-            case 3:
-                //todo minister menu
-                System.out.println("Minister Menu...");
-                break;
-            case 4:
-                printCommandersMenu();
-                break;
-            case 5:
-                printCitizensMenu();
-                break;
-            default:
-                System.out.println("Invalid answer, Number has to be between 1 and 5 \n > ");
-                break;
+        int answer = 0;
+        while (answer != 6) {
+            printRoleMenu();
+            do {
+
+                System.out.println("Choose your role:");
+                System.out.print("> ");
+                answer = validate.validateIntInput();
+            } while (answer > 6 || answer < 1);
+
+            switch (answer) {
+                case 1 -> {
+                    printKingsMenu();
+                    break;
+                }
+                case 2 -> {
+                    printSoldiersMenu();
+                    break;
+                }
+                case 3 -> {
+                    //todo minister menu
+                    System.out.println("Minister Menu...");
+                    break;
+                }
+                case 4 -> {
+                    printCommandersMenu();
+                    break;
+                }
+                case 5 -> {
+                    printCitizensMenu();
+                    break;
+                }
+                case 6 -> {
+                    System.out.println("Exit Program");
+                    break;
+                }
+
+            }
         }
     }
 
@@ -50,9 +61,9 @@ public class IOHandler {
         System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
         System.out.println("│1. King                 │     │2. Soldier              │     │3. Minister             │");
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯");
-        System.out.println("╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│4. Commander            │     │5. Citizen              │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        System.out.println("╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
+        System.out.println("│4. Commander            │     │5. Citizen              │     │6. Exit                 │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
 
     }
 
@@ -67,59 +78,77 @@ public class IOHandler {
             System.out.print("> ");
             answer = validate.validateIntInput();
         } while (answer < 1 || answer > 2);
+        switch (answer) {
+            case 1:
+                System.out.println("AK Kingdom was the biggest kingdom in the subregion of europe. Tho they succeeded in all of their wars the still got their biggest enemy left to defeat. Now it is time to play THE GAME");
+                break;
+            case 2:
+                System.out.println("NM Kingdom was the biggest kingdom in the western of europe. They defeated all of their neighboring countries, well.. except for one. Now that you have decided to join this empire... FIGHT and acknowledge this kingdom as yours..");
+                break;
+            default:
+                System.out.println("Ohhps wrong spot here");
+        }
     }
 
 
     public void printKingsMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│1. Check Bank balance   │     │2. Check army           │     │3. Give instruction     │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮      ╭────────────────────────╮");
+        System.out.println("│1. Check Bank balance   │     │2. Check army           │     │3. Give instruction     │        │4. Go back              │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯        ╰────────────────────────╯" + RESET);
         kingsRole();
     }
 
-    public Instruction giveInstruction() {
-        Instruction instruction = new Instruction(Command.PROTEST, printInstructionDescription(wapisdehCommand()));
-        List<String> commandList = Stream.of(Command.values()).map(Enum::name).collect(Collectors.toList());
-        String commandAnswer = "";
-        while (!commandList.contains(commandAnswer)) {
-            System.out.println(commandList);
-            System.out.println("> ");
-            commandAnswer = scan.nextLine();
-            if (commandList.contains(commandAnswer)) {
-                king.makeRequest(instruction);
-            } else {
-                System.out.print("No such command found \n Try again: \n > ");
-                commandAnswer = scan.nextLine();
+
+    public void kingsRole() {
+        int answer = 0;
+        while (answer != 4) {
+            System.out.print("> ");
+
+            answer = validate.validateIntInput();
+            switch (answer) {
+                case 1:
+                case 2:
+                    soldier.fight(false);
+                    break;
+                case 3:
+                    giveInstruction();
+                    break;
+                case 4:
+                    System.out.println("Going back...");
+                    break;
+                default:
+                    System.out.println("Not valid \n Try again: \n > ");
+                    break;
             }
+        }
+    }
+
+    public Instruction giveInstruction() {
+        Command[] command = Command.values();
+        for (Command c : command) {
+            System.out.println(c);
+        }
+        System.out.println("Choose from the list above: ");
+        System.out.print("> ");
+        String answer = scan.nextLine();
+        Instruction instruction = new Instruction(Command.valueOf(answer), printInstructionDescription(answer));
+
+        if (Command.getCommands().toString().contains(answer)) {
+            king.makeRequest(instruction);
+        } else {
+            // TODO: 09.05.2022 Validation
+            System.out.println("This commands was not in the list. \nTry again king: \n > ");
+            //answer = scan.nextLine();
+
         }
         return instruction;
     }
 
-    public void kingsRole() {
-        System.out.print("> ");
-        int answer = 0;
-        answer = validate.validateIntInput();
-        switch (answer) {
-            case 1:
-                System.out.println("check balance");
-                break;
-            case 2:
-                System.out.println("check army");
-                break;
-            case 3:
-                giveInstruction();
-                break;
-            default:
-                System.out.println("Not valid \n Try again: \n > ");
-                break;
-        }
-
-    }
 
     public void printSoldiersMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│1. Shoot                │     │2. Defend               │     │3. Check Notification   │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮      ╭────────────────────────╮");
+        System.out.println("│1. Start Fight          │     │2. Check Notification   │       │3. Go back              │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯       ╰────────────────────────╯" + RESET);
         soldierRole();
     }
 
@@ -129,10 +158,10 @@ public class IOHandler {
         do {
             switch (answer) {
                 case 1:
-                    System.out.println("shoot");
+                    soldier.fight(true);
                     break;
                 case 2:
-                    System.out.println("defend");
+                    // soldier.handleRequest();
                     break;
                 default:
                     System.out.println("Invalid answer, choose from the menu above \n > ");
@@ -143,34 +172,30 @@ public class IOHandler {
 
 
     public void printCitizensMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│1.     Protest          │     │2. Start Spending       │     │3. Start Saving         │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮       ╭────────────────────────╮");
+        System.out.println("│1.     Protest          │     │2. Start Spending       │     │3. Start Saving         │        │4. Go back              │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯        ╰────────────────────────╯" + RESET);
     }
 
 
     public void printCommandersMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
-        System.out.println("│1.     Parkour          │     │2. Stamina Exercises    │     │3. Shooting Practice    │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮   ╭────────────────────────╮");
+        System.out.println("│1.     Parkour          │     │2. Stamina Exercises    │     │3. Shooting Practice    │    │4. Go back              │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯    ╰────────────────────────╯" + RESET);
     }
 
-    public String printInstructionDescription(Command command) {
+    public String printInstructionDescription(String command) {
         String description = "";
         switch (command) {
-            case COLLECT_TAX -> description = "Collect 5% of income as tax";
-            case PROTEST -> description = "Go Protest for your king";
-            case SHOOTING_PRACTICE -> description = "Get ready to start shooting";
-            case STAMINA_EXERCISES -> description = "Lets work on those abs";
-            case START_SAVING -> description = "Keep the money you earn for yourself";
-            case START_SPENDING -> description = "Help your state by spending your income!";
+            case "COLLECT_TAX" -> description = "Collect 5% of income as tax";
+            case "PROTEST" -> description = "Go Protest for your king";
+            case "SHOOTING_PRACTICE" -> description = "Get ready to start shooting";
+            case "STAMINA_EXERCISES" -> description = "Lets work on those abs";
+            case "START_SAVING" -> description = "Keep the money you earn for yourself";
+            case "START_SPENDING" -> description = "Help your state by spending your income!";
         }
         System.out.println(description);
         return description;
-    }
-
-    public Command wapisdehCommand(){
-        return giveInstruction().getCommand();
     }
 
     /**

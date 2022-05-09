@@ -1,9 +1,11 @@
 package com.tbz.ch;
 
 public class King {
-    private double bankBalance;
+    private static int bankBalance = 10000;
+    private static int checkArmy = 300;
     private RequestHandler militaryChain;
     private RequestHandler populationChain;
+    private Soldier soldier;
 
     public King() {
         buildChain();
@@ -23,8 +25,17 @@ public class King {
         }
     }
 
-    public Double checkBankBalance() {
-        return bankBalance;
+    public static void updateBankBalance(int wins){
+        int balance = bankBalance += wins;
+        System.out.println("Bank balance: "+ balance);
+    }
+
+    public static void updateArmyMan(int wins) {
+        int army = checkArmy += wins;
+        System.out.println("Army left: "+army);
+    }
+    public void returnArmyMan(){
+
     }
 
     public double getBankBalance() {
