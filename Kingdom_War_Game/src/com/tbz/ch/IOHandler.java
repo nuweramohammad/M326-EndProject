@@ -14,13 +14,11 @@ public class IOHandler {
     private King king = new King();
     private Soldier soldier = new Soldier();
 
-
     public void chooseRole() {
         int answer = 0;
         while (answer != 6) {
             printRoleMenu();
             do {
-
                 System.out.println("Choose your role:");
                 System.out.print("> ");
                 answer = validate.validateIntInput();
@@ -37,7 +35,7 @@ public class IOHandler {
                 }
                 case 3 -> {
                     //todo minister menu
-                    System.out.println("Minister Menu...");
+                    printMinistersMenu();
                     break;
                 }
                 case 4 -> {
@@ -49,7 +47,7 @@ public class IOHandler {
                     break;
                 }
                 case 6 -> {
-                    System.out.println("Exit Program");
+                    printGoodBye();
                     break;
                 }
 
@@ -90,20 +88,17 @@ public class IOHandler {
         }
     }
 
-
     public void printKingsMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮      ╭────────────────────────╮");
-        System.out.println("│1. Check Bank balance   │     │2. Check army           │     │3. Give instruction     │        │4. Go back              │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯        ╰────────────────────────╯" + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮");
+        System.out.println("│1. Check Bank balance   │     │2. Check army           │     │3. Give instruction     │     │4. Go back              │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯" + RESET);
         kingsRole();
     }
-
 
     public void kingsRole() {
         int answer = 0;
         while (answer != 4) {
             System.out.print("> ");
-
             answer = validate.validateIntInput();
             switch (answer) {
                 case 1:
@@ -117,7 +112,7 @@ public class IOHandler {
                     System.out.println("Going back...");
                     break;
                 default:
-                    System.out.println("Not valid \n Try again: \n > ");
+                    System.out.println("Not valid \n Try again: ");
                     break;
             }
         }
@@ -135,7 +130,6 @@ public class IOHandler {
             // TODO: 09.05.2022 Validation
             System.out.println("This commands was not in the list. \nTry again king: \n > ");
             //answer = scan.nextLine();
-
         }
         return instruction;
     }
@@ -147,9 +141,8 @@ public class IOHandler {
         }
     }
 
-
     public void printSoldiersMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮      ╭────────────────────────╮");
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮       ╭────────────────────────╮");
         System.out.println("│1. Start Fight          │     │2. Check Notification   │       │3. Go back              │");
         System.out.println("╰────────────────────────╯     ╰────────────────────────╯       ╰────────────────────────╯" + RESET);
         soldierRole();
@@ -157,8 +150,8 @@ public class IOHandler {
 
     public void soldierRole() {
         int answer = 0;
-        answer = validate.validateIntInput();
-        do {
+        while (answer != 3) {
+            answer = validate.validateIntInput();
             switch (answer) {
                 case 1:
                     soldier.fight(true);
@@ -166,25 +159,90 @@ public class IOHandler {
                 case 2:
                     soldier.checkNotification(giveInstruction());
                     break;
+                case 3:
+                    System.out.println("Going back...");
+                    break;
                 default:
                     System.out.println("Invalid answer, choose from the menu above \n > ");
                     break;
             }
-        } while (answer < 1 || answer > 2);
-    }
+        }
 
+    }
 
     public void printCitizensMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮       ╭────────────────────────╮");
-        System.out.println("│1.     Protest          │     │2. Start Spending       │     │3. Start Saving         │        │4. Go back              │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯        ╰────────────────────────╯" + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮");
+        System.out.println("│1.  Check notification  │     │2. Go back              │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        citizensRole();
     }
 
+    public void citizensRole() {
+        int answer = 0;
+        while (answer != 2) {
+            answer = validate.validateIntInput();
+            switch (answer) {
+                case 1:
+                    System.out.println("Check notification");
+                    break;
+                case 2:
+                    System.out.println("Going back...");
+                    break;
+                default:
+                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    break;
+            }
+        }
+    }
 
     public void printCommandersMenu() {
-        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮     ╭────────────────────────╮   ╭────────────────────────╮");
-        System.out.println("│1.     Parkour          │     │2. Stamina Exercises    │     │3. Shooting Practice    │    │4. Go back              │");
-        System.out.println("╰────────────────────────╯     ╰────────────────────────╯     ╰────────────────────────╯    ╰────────────────────────╯" + RESET);
+        System.out.println(BLUE + "\n╭────────────────────────╮        ╭────────────────────────╮");
+        System.out.println("│1. Add new Command      │        │2. Go back              │");
+        System.out.println("╰────────────────────────╯        ╰────────────────────────╯" + RESET);
+        commandersRole();
+    }
+
+    public void commandersRole() {
+        int answer = 0;
+        while (answer != 2) {
+            answer = validate.validateIntInput();
+            switch (answer) {
+                case 1:
+                    System.out.println("Adding new Command");
+                    break;
+                case 2:
+                    System.out.println("Going back...");
+                    break;
+                default:
+                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    break;
+            }
+        }
+    }
+
+    public void printMinistersMenu() {
+        System.out.println(BLUE + "\n╭────────────────────────╮     ╭────────────────────────╮");
+        System.out.println("│1.  Give Quote          │     │2. Go back              │");
+        System.out.println("╰────────────────────────╯     ╰────────────────────────╯" + RESET);
+        ministersRole();
+    }
+
+    public void ministersRole() {
+        int answer = 0;
+        while (answer != 2) {
+            answer = validate.validateIntInput();
+            switch (answer) {
+                case 1:
+                    System.out.println("give quote");
+                    break;
+                case 2:
+                    System.out.println("Going back...");
+                    break;
+                default:
+                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    break;
+            }
+        }
     }
 
     public String printInstructionDescription(String command) {
@@ -197,6 +255,7 @@ public class IOHandler {
             case "START_SAVING" -> description = "Keep the money you earn for yourself";
             case "START_SPENDING" -> description = "Help your state by spending your income!";
         }
+        System.out.println(description);
         return description;
     }
 

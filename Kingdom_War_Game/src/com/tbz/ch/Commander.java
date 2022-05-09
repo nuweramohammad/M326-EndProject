@@ -17,4 +17,8 @@ public class Commander extends RequestHandler{
             System.out.println("Not accepting");
         }
     }
+
+    public void addNewCommand(){
+        System.out.println("adding command...");
+    }
 }
