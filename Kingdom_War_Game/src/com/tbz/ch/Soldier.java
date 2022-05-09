@@ -16,6 +16,13 @@ public class Soldier extends RequestHandler {
     public Soldier() {
         super();
     }
+    public void checkNotification(Instruction instruction){
+        if(instruction.getCommand().equals(Command.SHOOTING_PRACTICE)){
+            System.out.println(instruction.getCommandDescription());
+        }else{
+            System.out.println("No notifications");
+        }
+    }
 
     @Override
     public void handleRequest(Instruction request) {

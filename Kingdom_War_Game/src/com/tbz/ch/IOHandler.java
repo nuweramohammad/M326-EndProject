@@ -124,15 +124,11 @@ public class IOHandler {
     }
 
     public Instruction giveInstruction() {
-        Command[] command = Command.values();
-        for (Command c : command) {
-            System.out.println(c);
-        }
+        printInstruction();
         System.out.println("Choose from the list above: ");
         System.out.print("> ");
         String answer = scan.nextLine();
         Instruction instruction = new Instruction(Command.valueOf(answer), printInstructionDescription(answer));
-
         if (Command.getCommands().toString().contains(answer)) {
             king.makeRequest(instruction);
         } else {
@@ -142,6 +138,13 @@ public class IOHandler {
 
         }
         return instruction;
+    }
+
+    public void printInstruction(){
+        Command[] command = Command.values();
+        for (Command c : command) {
+            System.out.println(c);
+        }
     }
 
 
@@ -161,7 +164,7 @@ public class IOHandler {
                     soldier.fight(true);
                     break;
                 case 2:
-                    // soldier.handleRequest();
+                    soldier.checkNotification(giveInstruction());
                     break;
                 default:
                     System.out.println("Invalid answer, choose from the menu above \n > ");
@@ -194,7 +197,6 @@ public class IOHandler {
             case "START_SAVING" -> description = "Keep the money you earn for yourself";
             case "START_SPENDING" -> description = "Help your state by spending your income!";
         }
-        System.out.println(description);
         return description;
     }
 
