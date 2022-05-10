@@ -9,7 +9,6 @@ public class IOHandler {
     public static final String GREEN = "\u001B[32m";
     public static final String BLUE = "\u001B[34m";
     private final Scanner scan = new Scanner(System.in);
-    private Queue queue;
     private Validation validate = new Validation();
     private King king = new King();
     private Soldier soldier = new Soldier();
@@ -36,7 +35,6 @@ public class IOHandler {
                     break;
                 }
                 case 3 -> {
-                    //todo minister menu
                     printMinistersMenu();
                     break;
                 }
@@ -129,9 +127,8 @@ public class IOHandler {
         if (Command.getAndAddCommands().toString().contains(answer)) {
             king.makeRequest(instruction);
         } else {
-            // TODO: 09.05.2022 Validation
             System.out.println(RED+"This commands was not in the list. \nTry again king: \n > "+RESET);
-            //answer = scan.nextLine();
+            answer = scan.nextLine();
         }
         return instruction;
     }
@@ -247,6 +244,13 @@ public class IOHandler {
         }
     }
 
+    /**
+     * This method assign a description to
+     * each command so that the user knows
+     * what he has to do
+     * @param command
+     * @return
+     */
     public String printInstructionDescription(String command) {
         String description = "";
         switch (command) {

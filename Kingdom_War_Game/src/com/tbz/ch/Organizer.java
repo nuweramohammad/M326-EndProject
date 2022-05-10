@@ -4,6 +4,5 @@ public class Organizer {
     public void run(){
         ioHandler.printInstigation();
         ioHandler.chooseRole();
-
-    };
+    }
 }

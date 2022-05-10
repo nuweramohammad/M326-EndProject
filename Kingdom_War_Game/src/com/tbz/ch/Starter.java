@@ -6,6 +6,5 @@ public class Starter {
     public static void main(String[] args) {
         Organizer organizer = new Organizer();
         organizer.run();
-
     }
 }

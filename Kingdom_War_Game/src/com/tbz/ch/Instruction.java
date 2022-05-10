@@ -1,5 +1,9 @@
 package com.tbz.ch;
 
+/**
+ * Instruction consists of a command
+ * and a description
+ */
 public class Instruction {
     private Command command;
     private String commandDescription;
@@ -10,6 +14,11 @@ public class Instruction {
         this.commandDescription = commandDescription;
     }
 
+    /**
+     * As soon as the command is passed
+     * it's marked as sent so that the chain
+     * can be ended
+     */
     public void markHandled(){
         this.isSent = true;
     }
@@ -20,10 +29,6 @@ public class Instruction {
 
     public String getCommandDescription() {
         return commandDescription;
-    }
-
-    public boolean isSent() {
-        return isSent;
     }
 
     @Override
