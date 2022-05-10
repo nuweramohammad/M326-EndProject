@@ -1,7 +1,6 @@
 package com.tbz.ch;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Soldier extends RequestHandler {
@@ -16,8 +15,10 @@ public class Soldier extends RequestHandler {
     public Soldier() {
         super();
     }
+
+    @Override
     public void checkNotification(Instruction instruction){
-        if(instruction.getCommand().equals(Command.SHOOTING_PRACTICE)){
+        if(instruction.getCommand().equals(Command.SHOOTING_PRACTICE)|| instruction.getCommand().equals(Command.STAMINA_EXERCISES)){
             System.out.println(instruction.getCommandDescription());
         }else{
             System.out.println("No notifications");
@@ -27,7 +28,7 @@ public class Soldier extends RequestHandler {
     @Override
     public void handleRequest(Instruction request) {
         if (Command.SHOOTING_PRACTICE == request.getCommand() || Command.STAMINA_EXERCISES == request.getCommand()) {
-            System.out.println(this.name + " Handle request: " + request);
+            System.out.println("Passing Command to Soldier; " + request);
             request.markHandled();
         } else {
             System.out.println("Not a request for the Soldier");

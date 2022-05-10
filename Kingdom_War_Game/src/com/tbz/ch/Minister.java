@@ -9,12 +9,21 @@ public class Minister extends RequestHandler {
     @Override
     public void handleRequest(Instruction request) {
         if (Command.COLLECT_TAX == request.getCommand()) {
-            System.out.println("Minister Handle request: " + request);
+            System.out.println("Passing Command to Minister; " + request);
             request.markHandled();
         } else if (Command.PROTEST == request.getCommand() || Command.START_SAVING == request.getCommand() || Command.START_SPENDING == request.getCommand()) {
             super.handleRequest(request);
         }else{
             System.out.println("Not accepting");
+        }
+    }
+
+    @Override
+    public void checkNotification(Instruction instruction){
+        if(instruction.getCommand().equals(Command.COLLECT_TAX)){
+            System.out.println(instruction.getCommandDescription());
+        }else{
+            System.out.println("No notifications");
         }
     }
 }

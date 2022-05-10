@@ -20,12 +20,8 @@ public enum Command {
         }
     }
 
-    public static List<Command> getCommands() {
+    public static List<Command> getAndAddCommands() {
         addEnumValues();
         return commands;
     }
-
-
-
-
 }

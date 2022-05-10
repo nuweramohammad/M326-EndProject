@@ -13,6 +13,8 @@ public class IOHandler {
     private Validation validate = new Validation();
     private King king = new King();
     private Soldier soldier = new Soldier();
+    private Citizen citizen = new Citizen();
+    private Commander commander = new Commander();
 
     public void chooseRole() {
         int answer = 0;
@@ -78,13 +80,13 @@ public class IOHandler {
         } while (answer < 1 || answer > 2);
         switch (answer) {
             case 1:
-                System.out.println("AK Kingdom was the biggest kingdom in the subregion of europe. Tho they succeeded in all of their wars the still got their biggest enemy left to defeat. Now it is time to play THE GAME");
+                System.out.println(GREEN+"AK Kingdom was the biggest kingdom in the subregion of europe. Tho they succeeded in all of their wars the still got their biggest enemy left to defeat.\nNow it is time to play THE GAME"+RESET);
                 break;
             case 2:
-                System.out.println("NM Kingdom was the biggest kingdom in the western of europe. They defeated all of their neighboring countries, well.. except for one. Now that you have decided to join this empire... FIGHT and acknowledge this kingdom as yours..");
+                System.out.println(GREEN+"NM Kingdom was the biggest kingdom in the western of europe. \nThey defeated all of their neighboring countries, well.. except for one. Now that you have decided to join this empire... FIGHT and acknowledge this kingdom as yours.."+RESET);
                 break;
             default:
-                System.out.println("Ohhps wrong spot here");
+                System.out.println(RED+"Ohhps wrong spot here"+RESET);
         }
     }
 
@@ -112,7 +114,7 @@ public class IOHandler {
                     System.out.println("Going back...");
                     break;
                 default:
-                    System.out.println("Not valid \n Try again: ");
+                    System.out.println(RED+"Not valid \n Try again: "+RESET);
                     break;
             }
         }
@@ -124,20 +126,20 @@ public class IOHandler {
         System.out.print("> ");
         String answer = scan.nextLine();
         Instruction instruction = new Instruction(Command.valueOf(answer), printInstructionDescription(answer));
-        if (Command.getCommands().toString().contains(answer)) {
+        if (Command.getAndAddCommands().toString().contains(answer)) {
             king.makeRequest(instruction);
         } else {
             // TODO: 09.05.2022 Validation
-            System.out.println("This commands was not in the list. \nTry again king: \n > ");
+            System.out.println(RED+"This commands was not in the list. \nTry again king: \n > "+RESET);
             //answer = scan.nextLine();
         }
         return instruction;
     }
 
-    public void printInstruction(){
+    public void printInstruction() {
         Command[] command = Command.values();
         for (Command c : command) {
-            System.out.println(c);
+            System.out.println(GREEN+c+RESET);
         }
     }
 
@@ -163,7 +165,7 @@ public class IOHandler {
                     System.out.println("Going back...");
                     break;
                 default:
-                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    System.out.println(RED+"Invalid answer, choose from the menu above \n > "+RESET);
                     break;
             }
         }
@@ -183,13 +185,13 @@ public class IOHandler {
             answer = validate.validateIntInput();
             switch (answer) {
                 case 1:
-                    System.out.println("Check notification");
+                    citizen.checkNotification(giveInstruction());
                     break;
                 case 2:
                     System.out.println("Going back...");
                     break;
                 default:
-                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    System.out.println(RED+"Invalid answer, choose from the menu above \n > "+RESET);
                     break;
             }
         }
@@ -208,13 +210,13 @@ public class IOHandler {
             answer = validate.validateIntInput();
             switch (answer) {
                 case 1:
-                    System.out.println("Adding new Command");
+                    commander.addNewCommand();
                     break;
                 case 2:
                     System.out.println("Going back...");
                     break;
                 default:
-                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    System.out.println(RED+"Invalid answer, choose from the menu above \n > "+RESET);
                     break;
             }
         }
@@ -239,7 +241,7 @@ public class IOHandler {
                     System.out.println("Going back...");
                     break;
                 default:
-                    System.out.println("Invalid answer, choose from the menu above \n > ");
+                    System.out.println(RED+"Invalid answer, choose from the menu above \n > "+RESET);
                     break;
             }
         }
@@ -255,7 +257,6 @@ public class IOHandler {
             case "START_SAVING" -> description = "Keep the money you earn for yourself";
             case "START_SPENDING" -> description = "Help your state by spending your income!";
         }
-        System.out.println(description);
         return description;
     }
 
